@@ -1,4 +1,4 @@
-angular.module('app', ['ionic', 'app.controllers', 'app.services','app.routes','btford.socket-io','ionic-timepicker','ionic-datepicker'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services','app.routes','app.directives','btford.socket-io','ionic-timepicker','ionic-datepicker'])
 
     .run(function ($rootScope, $state, $ionicPlatform, $window, $localstorage, Login) {
         var userModel = {
@@ -33,6 +33,32 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services','app.routes','
         }
 
     })
+	
+	.run(function($ionicPlatform, $ionicPopup) {
+        $ionicPlatform.ready(function() {
+			//alert( "in ionicplatorm ready ") ; 
+			
+            if(window.Connection) {
+                if(navigator.connection.type == Connection.NONE) { 
+				//console.log( " got connection") ; 
+				//alert("internet is not ok ") ; 
+				
+                    $ionicPopup.confirm({
+                        title: "Internet Disconnected",
+                        content: "The internet is disconnected on your device."
+                    })
+                    .then(function(result) {
+                        if(!result) {
+                            ionic.Platform.exitApp();
+                        }
+                    });
+                }
+            }
+			// alert("internet is ok ") ; 
+			
+        });
+    })
+	
 .config(function (ionicDatePickerProvider) {
     var datePickerObj = {
       inputDate: new Date(),

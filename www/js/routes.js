@@ -27,21 +27,44 @@ angular.module('app.routes', [])
   })
 
   .state('cameraFeed', {
-    url: '/camera',
+    url: '/camera', 
+	cache : false , 
     templateUrl: 'templates/cameraFeed.html',
     controller: 'ImageCtrl'
   })
-  .state('both', {
-    url: '/both',
-    templateUrl: 'templates/tab-dash.html',
+  .state('specific', {
+    url: '/specific',
+	cache         : false, 
+    templateUrl: 'templates/showSpecific.html',
     controller: 'DashCtrl'
+  })
+  
+   .state('live', {
+    url: '/live',
+	cache         : false, 
+    templateUrl: 'templates/showLive.html',
+    controller: 'LiveCtrl'
   })
   .state('gPSTracker', {
     url: '/gps',
+	cache : false , 
     templateUrl: 'templates/gPSTracker.html',
     controller: 'GPSCtrl'
   })
-
+  
+.state('videoSpecific', {
+    url: '/video',
+	cache : false , 
+    templateUrl: 'templates/showSpecificVideos.html',
+    controller: 'videoCtrl'
+  })
+  
+  .state('videoLive', {
+    url: '/videolive',
+	cache : false , 
+    templateUrl: 'templates/showLiveVideos.html',
+    controller: 'LiveVideoCtrl'
+  })
    
 
   .state('home', {

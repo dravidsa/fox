@@ -1,0 +1,157 @@
+
+<style>
+#dvMapSpecific {
+  width: 100%;
+  height: 100%;
+}
+
+.scroll {
+  height: 100%;
+}
+.slider-slide img {
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
+
+</style>
+
+
+<body>
+
+
+
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <h2>GPS and Camera (Specific Mode) </h2>
+
+	<div id="main" ng-controller="DashCtrl">
+
+<label class = "item item-input item-select">
+   <div class = "input-label">
+      Select Vehicle
+   </div>
+	
+   <select ng-model="vehicleId" ng-change="showSelectValue(vehicleId)" ng-init="getVehicles()" ><option  ng-repeat="vehicle in vehicleArr" value = {{vehicle}} >{{vehicle}}</option>
+     </select>
+</label>
+	<BR/>
+	
+<label class = "item item-input item-select">
+   <div class = "input-label">
+      Select Image/Video
+   </div>
+	
+   <select ng-model="img_video_option" ng-change="setImgMode(img_video_option)" >
+   <option  ng-selected="selected">Image</option>
+   <option>Video</option>
+     </select>
+</label>
+
+
+   
+   <br/>
+	<br/>
+   
+   
+<center>
+
+<div id="timerange" ng-controller="DashCtrl">
+
+<div class="item item-icon-left" ion-datetime-picker date ng-model="forDate">
+                <i class="icon ion-ios-calendar positive"></i>
+                Select the Date :
+                <strong>{{forDate| date: "dd-MM-yyyy"}}</strong>
+            </div>
+			
+			<div class="item item-icon-left" ion-datetime-picker time ng-model="fromTime">
+                <i class="icon ion-ios-clock positive"></i>
+                Select From Time :
+                <strong>{{fromTime| date: "H:mm"}}</strong>
+            </div>
+			
+			<div class="item item-icon-left" ion-datetime-picker time ng-model="toTime">
+                <i class="icon ion-ios-clock positive"></i>
+                Select To Time :
+                <strong>{{toTime| date: "H:mm"}}</strong>
+            </div>
+ <br/>
+ 
+		<button class="button button-energized" ng-click=getData() >
+  Get Data
+</button>
+
+
+<br>
+
+ {{errorMessage}} 
+
+{{GPSMessage}}
+
+
+
+
+<div id="dvMapSpecific" style="width:90%; height:300px" class="row">
+
+</div> 
+       
+<BR/>
+<BR/>
+ 
+
+
+{{ImageMessage}} 
+
+<div id="imageDivSpecific" ng-if="img_video_option == 'Image'" >
+
+   
+
+   
+ <div id=imgmessage ng-if="mode == 'specific' && photos.length >0 "> 
+
+
+
+</div> 
+
+
+<button id="prevButton" class="button button-small" ng-Click="showPrev()" ng-if="mode == 'specific'">
+   <<
+</button>
+
+
+  <img id="imageHolder" src="{{photos[img_counter].src}}"  class="row"   style="width:90%;height:300px;"  >
+	<button id="nextButton" class="button button-small" ng-Click="showNext()"  ng-if="mode == 'specific'" >
+   >>
+</button>
+		 
+			
+</div>
+
+<div id="videoDiv" ng-if="img_video_option == 'Video'"> 
+<video width="256" height="192"  id="myVideo" controls autoplay >
+    <source src=""   id="mp4Source" type="video/mp4">
+  
+</video>
+</div> 
+
+    
+<BR/> 
+
+<p class="assertive">  {{videoMessage}}</p>  <br/>
+<BR/>
+
+		 
+       
+     
+
+</div
+</div>
+
+	  </center>
+
+</ion-content>
+</ion-view>
+</body>

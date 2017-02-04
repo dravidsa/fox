@@ -1,0 +1,72 @@
+<html>
+
+<script type='text/javascript'>
+
+var mp4Vid ; var player ; var cnt = 0 ; 
+
+function nextVideo() 
+{
+console.log( " in next video ") ; 
+}
+function videoFunc()  { 
+   
+   console.log ( "enering script "); 
+   
+   player =document.getElementById('myVideo');
+   alert( "got it ") ; 
+   console.log( "got player "); 
+    mp4vid = document.getElementById('mp4Source');
+   player.addEventListener('ended',myHandler,false);
+
+}
+   function myHandler(e)
+   {   console.log ( "cnt is " + cnt ) ; 
+      if ( cnt ++ <  2 )
+      {      
+	  console.log( "video ended ");   
+      //$(mp4Vid).attr('src', "https://www.youtube.com/watch?v=aQL2OSLKtp0");
+	  //$(mp4Vid).src =  "https://www.youtube.com/watch?v=aQL2OSLKtp0";
+	  player.src = "http://foxsolutions.in/fox/uploads//CAM1-161218-230146.mp4"; 
+	  console.log ("src is " +  player.src ) ; 
+      player.load();
+      player.play();
+     } else { 
+	 console.log( " ignoring ");  } 
+}
+
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+  
+Videois {{ videos[0]}}
+<form>
+<video width="256" height="192"  id="myVideo" controls autoplay >
+    <ng-src= trustSrc({{videos[0]}}) id="mp4Source" type="video/mp4"  >
+    Your browser does not support the video tag.
+</video>
+
+Showing Video No {{ count}} - {{ videos[count]}}
+
+</form> 
+
+
+
+</ion-content>
+</ion-view> 
+
+
+
+
+</html> 
+
+     
+
+	
+	
+	 
+				
+

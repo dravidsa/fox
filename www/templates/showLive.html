@@ -1,0 +1,99 @@
+
+<style>
+#dvMapLive{
+  width: 100%;
+  height: 100%;
+}
+
+.scroll {
+  height: 100%;
+}
+.slider-slide img {
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
+
+</style>
+
+
+<body ng-controller="LiveCtrl">
+
+
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <h2>GPS and Camera (Live Mode)</h2>
+	
+<label class = "item item-input item-select">
+   <div class = "input-label">
+      Select Vehicle
+   </div>
+	
+   <select ng-model="vehicleId" ng-change="showSelectValue(vehicleId)" ng-init="getVehicles()" ><option  ng-repeat="vehicle in vehicleArr" value = {{vehicle}} >{{vehicle}}</option>
+     </select>
+</label>
+<BR/>
+
+<label class = "item item-input item-select">
+   <div class = "input-label">
+      Select Image/Video
+   </div>
+	
+   <select ng-model="img_video_option" ng-change="setImgMode(img_video_option)" >
+   <option selected>Image</option>
+   <option>Video</option>
+     </select>
+</label>
+
+
+   
+   <br/>
+  
+<center>   
+   <button class="button button-energized" ng-click=getData() >
+  Go Live
+</button>
+	<br/>
+  {{errorMessage }}
+   
+
+
+{{GPSMessage }}
+<div id="dvMapLive" style="width:90%; height:300px" class="row">
+ 
+</div> 
+       
+ 
+ 
+{{ImageMessage}}
+<BR/> 
+
+<div id="imageDivLive" ng-if="img_video_option =='Image'">
+
+  <img id="imageHolder" src="{{photos}}"  class="row"   style="width:90%;height:300px;"  >
+
+		 
+       
+     
+</div>
+
+
+<div id="videoDiv" ng-if="img_video_option == 'Video'"> 
+<video width="100%" height="250"  id="myVideo" controls autoplay >
+    <source src=""   id="mp4Source" type="video/mp4">
+  
+</video>
+</div>
+<BR/>
+<BR/>
+<BR/>
+
+
+	  </center>
+
+</ion-content>
+</ion-view>
+</body>
