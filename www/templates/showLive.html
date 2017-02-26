@@ -20,22 +20,39 @@
 </style>
 
 
-<body ng-controller="LiveCtrl">
+<div id="main" ng-controller="LiveCtrl"  ng-init="getVehicles()">
 
-
+<body>
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
     <h2>GPS and Camera (Live Mode)</h2>
+
 	
+<div id=vehicle1 ng-if="vehicleArr.length>1">
 <label class = "item item-input item-select">
    <div class = "input-label">
       Select Vehicle
    </div>
-	
-   <select ng-model="vehicleId" ng-change="showSelectValue(vehicleId)" ng-init="getVehicles()" ><option  ng-repeat="vehicle in vehicleArr" value = {{vehicle}} >{{vehicle}}</option>
+
+   <select   ng-model="vehicleId" ng-change="showSelectValue(vehicleId)"  ><option  ng-repeat="vehicle in vehicleArr" value = {{vehicle}} >{{vehicle}}</option>
      </select>
+</div> 
+
+<div id=vehicle2 ng-if="vehicleArr.length==1">
+   <center>Showing Data for Vehicle {{vehicleArr[0]}} </center>
+	 </div> 	 
+	 <div id=vehicle3 ng-if="vehicleArr.length==0">
+   <center> You dont have permissions to view for any vehicle </center>  
+	 </div> 
+	 
 </label>
-<BR/>
+	<BR/>
+
+
+	
+
+{{img_option}}
+<div id=img_option ng-if="img_video_opton ==''">
 
 <label class = "item item-input item-select">
    <div class = "input-label">
@@ -47,6 +64,7 @@
    <option>Video</option>
      </select>
 </label>
+</div> 
 
 
    
@@ -97,3 +115,4 @@
 </ion-content>
 </ion-view>
 </body>
+</div>

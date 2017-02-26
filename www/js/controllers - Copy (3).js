@@ -29,7 +29,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 
 
 	
-	.controller('DashCtrl', function($scope,ionicDatePicker , ionicTimePicker, $rootScope, $sce, Images, Videos,Locations, $localstorage , Vehicle, $ionicSlideBoxDelegate, $ionicLoading) {
+	.controller('DashCtrl', function($scope,ionicDatePicker , ionicTimePicker, $rootScope, $sce,socket, Images, Videos,Locations, $localstorage , Vehicle, $ionicSlideBoxDelegate, $ionicLoading) {
 	
 	console.log("in dashctrl"); 
 	//var imageArr =  [] ; 
@@ -37,7 +37,6 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	$scope.imageArr = [] ;
     $scope.photos = [] ; 
 	$scope.latlongArr = [] ;  
-	$scope.img_video_option = "Video" ; 
 	
 	
 	
@@ -84,26 +83,16 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	
 
                     Vehicle.execute( data).then(function (vehicledata) { 
-                            console.log("got vehicle" + vehicledata ) ;
-							$scope.vehicleArr = [] ; 							
-							if (vehicledata == "No data") { 
-							vehicledata = [] ; 
-							}
-							else if ( vehicledata.length == 1 ) 
-							{   console.log( " got vehicle " + JSON.stringify(vehicledata) ) ; 
-								$scope.vehicleId =vehicledata[0].vehicle_id; 
-								$rootScope.userModel.vehicle = vehicledata[0].vehicle_id;
-								$scope.vehicleArr.push(vehicledata[0].vehicle_id ) ; 
-								 console.log(" vehicle id in getVehicles  is " + $rootScope.userModel.vehicle ) ;
-							}
-                     
-					if ( vehicledata.length > 1 ) {
+                            console.log("got vehicle" + vehicledata ) ; 
+                  $scope.vehicleArr = [] ; 
+
+                    $rootScope.userModel.vehicle = vehicledata; 
+                      console.log(" vehicle id in getVehicles  is " + vehicledata ) ;  
 					  for ( i = 0 ; i < vehicledata.length; i ++ ) {
 						  console.log ( "got veh" + vehicledata[i].vehicle_id) ; 
 						  $scope.vehicleArr.push(vehicledata[i].vehicle_id ) ; 
 						  
 					  }	
-					}
 		
 	}) ; 
 	}		  
@@ -196,7 +185,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 				  console.log("vid"  + $scope.vehicleId+"< for date>"+$scope.forDate+"< fromtime>" + $scope.fromTime.getHours()+"<"+$scope.toTime.getMinutes()+"<") ; 
 
 
- //$scope.ImageMessage = "Showing Images for Vehicle"; 
+ $scope.ImageMessage = "Showing Images for Vehicle"; 
 	
  if  ( $scope.img_video_option == 'Image' ) { 
 	$scope.getImages() ; 
@@ -457,7 +446,6 @@ $scope.getLocations  = function() {
    var latlong1 = new google.maps.LatLng($scope.latlongArr[0].latitude, $scope.latlongArr[0].longitude) ; 
    var marker1 = new google.maps.Marker({
     position: latlong1 , 
-	label  : 'S',
     title:"start"
 });
 marker1.setMap(map); 
@@ -465,7 +453,6 @@ marker1.setMap(map);
 var latlong2 = new google.maps.LatLng($scope.latlongArr[$scope.latlongArr.length-1].latitude, $scope.latlongArr[$scope.latlongArr.length-1].longitude) ; 
    var marker2 = new google.maps.Marker({
     position: latlong2 , 
-	label  : 'E',
     title:"start"
 })
 marker2.setMap(map);
@@ -775,9 +762,6 @@ $scope.setImgMode = function(img_video_option) {
 	
 	console.log("in Livectrl"); 
 	var imageArr =  [] ; 
-    $scope.gpsCount = 1 ; 
-	var polyline , redline ; 
-	
 	
 	$scope.mode = "live" ; 
 	$scope.currentDate = new Date();
@@ -788,7 +772,7 @@ $scope.setImgMode = function(img_video_option) {
 	 
 	 var div = document.getElementById('dvMapLive');console.log("got div "  + div ) ; 
 	 div.style.visibility = 'visible'; 
-	 $scope.img_video_option = "Video" ; 	 
+	 
 	 
 	// $scope.errorMessage = " No error " ; 
 	 //$scope.debugMessage = " All's well " ; 
@@ -828,7 +812,7 @@ $scope.setImgMode = function(img_video_option) {
 } 
 
 	$scope.getData = function () { 
-	$scope.latlongArr = []; 
+	
 	console.log( " mode is " + $scope.img_video_option) ; 	
     
 	if ( $scope.img_video_option == null )  { 
@@ -1060,63 +1044,10 @@ socket.on( "gps", function(data) {
 
 		 
       $scope.latlongArr.push(location );
-	  //start of live code 
-	var div = document.getElementById('dvMapLive');console.log("got div "  + div ) ; 
-	 div.style.visibility = 'visible'; 
-		console.log( " in drawmap "+ $scope.latlongArr.length) ; 
-
-        	
-		console.log( " herei n drawmap ") ; 
-        //$scope.getLocations() ; 
-        var mapOptions = {
-            center: new google.maps.LatLng(data[data.length-1].latitude, data[data.length-1].longitude),
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("dvMapLive"), mapOptions);
-		
-		  var polyline = [] ; 
-		  
-		  for ( i = 0 ;  i < $scope.latlongArr.length ; i ++ ) {
-			  polyline.push(new google.maps.LatLng($scope.latlongArr[i].latitude, $scope.latlongArr[i].longitude)) ; 
-			
-		  }
-	  var redline = new google.maps.Polyline({
-      path: polyline,
-      strokeColor: "#FF0000",
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    });
-
-   redline.setMap(map);
-  
-   var latlong1 = new google.maps.LatLng($scope.latlongArr[0].latitude, $scope.latlongArr[0].longitude) ; 
-   var marker1 = new google.maps.Marker({
-    position: latlong1 , 
-	label  : 'S' , 
-    title:"start"
-}); 
-
-marker1.setMap(map); 
-
-   
-var latlong2 = new google.maps.LatLng($scope.latlongArr[$scope.latlongArr.length-1].latitude, $scope.latlongArr[$scope.latlongArr.length-1].longitude) ; 
-   var marker2 = new google.maps.Marker({
-    position: latlong2 , 
-   label  : 'E' , 
-})
-marker2.setMap(map);
-  
-	  
-	  gpsCount ++ ; 
-	  
-	  //end of live draw 
-	  
-	  
       console.log( "lat long length is now " + $scope.latlongArr.length) ; 
         //$localstorage.setObject("latlongArr",latlongArr) ; 
 		
-      //$scope.drawMap() ; 
+      $scope.drawMap() ; 
 	} 
 	else console.log( " not the vehicle I want " + data[0].vehicle_id) ; 
 	

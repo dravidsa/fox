@@ -1,14 +1,21 @@
 
-
-
-<style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #dvMapSpecific {
+<style>
+#dvMapSpecific {
   width: 100%;
   height: 100%;
 }
 
+.scroll {
+  height: 100%;
+}
+.slider-slide img {
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
 
 </style>
 
@@ -21,44 +28,30 @@
   <ion-content class="padding">
     <h2>GPS and Camera (Specific Mode) </h2>
 
-	<div id="main" ng-controller="DashCtrl" ng-init="getVehicles()">
+	<div id="main" ng-controller="DashCtrl">
 
-	
-	
-<div id=vehicle1 ng-if="vehicleArr.length>1">
 <label class = "item item-input item-select">
    <div class = "input-label">
       Select Vehicle
    </div>
-
-   <select   ng-model="vehicleId" ng-change="showSelectValue(vehicleId)"  ><option  ng-repeat="vehicle in vehicleArr" value = {{vehicle}} >{{vehicle}}</option>
+	
+   <select ng-model="vehicleId" ng-change="showSelectValue(vehicleId)" ng-init="getVehicles()" ><option  ng-repeat="vehicle in vehicleArr" value = {{vehicle}} >{{vehicle}}</option>
      </select>
-</div> 
-
-<div id=vehicle2 ng-if="vehicleArr.length==1">
-   <center>Showing Data for Vehicle {{vehicleArr[0]}} </center>
-	 </div> 	 
-	 <div id=vehicle3 ng-if="vehicleArr.length==0">
-   <center> You dont have permissions to view for any vehicle </center>  
-	 </div> 
-	 
 </label>
 	<BR/>
-
-<div id=img_option ng-if="img_video_opton ==''"> 
-option is 	{{img_video_option}}
+	
 <label class = "item item-input item-select">
    <div class = "input-label">
       Select Image/Video
    </div>
 	
-   <select ng-model="img_video_option" ng-change="setImgMode(img_video_option)"  >
-   <option>Image</option>
-   <option ng-selected="selected">Video</option>
+   <select ng-model="img_video_option" ng-change="setImgMode(img_video_option)" >
+   <option  ng-selected="selected">Image</option>
+   <option>Video</option>
      </select>
 </label>
 
-</div> 
+
    
    <br/>
 	<br/>
@@ -101,7 +94,7 @@ option is 	{{img_video_option}}
 
 
 
-<div id="dvMapSpecific" style="width:100%; height:400px" class="row">
+<div id="dvMapSpecific" style="width:90%; height:300px" class="row">
 
 </div> 
        
@@ -138,7 +131,7 @@ option is 	{{img_video_option}}
 </div>
 
 <div id="videoDiv" ng-if="img_video_option == 'Video'"> 
-<video width="100%" height="300px"  id="myVideo" controls autoplay >
+<video width="256" height="192"  id="myVideo" controls autoplay >
     <source src=""   id="mp4Source" type="video/mp4">
   
 </video>

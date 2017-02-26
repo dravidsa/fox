@@ -16,22 +16,15 @@ angular.module('app.routes', [])
     abstract:true
   })
 
-  .state('tabsController.login', {
+  .state('login', {
     url: '/login',
-    views: {
-      'tab1': {
+   
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
-      }
-    }
+     
   })
 
-  .state('cameraFeed', {
-    url: '/camera', 
-	cache : false , 
-    templateUrl: 'templates/cameraFeed.html',
-    controller: 'ImageCtrl'
-  })
+ 
   .state('specific', {
     url: '/specific',
 	cache         : false, 
