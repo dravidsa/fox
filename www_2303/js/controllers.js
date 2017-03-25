@@ -29,7 +29,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 
 
 	
-	.controller('DashCtrl', function($scope,ionicDatePicker , ionicTimePicker, $rootScope,socket,  $sce, Images, Videos,Locations, $localstorage , Vehicle, $ionicSlideBoxDelegate, $ionicLoading , ConnectivityMonitor) {
+	.controller('DashCtrl', function($scope,ionicDatePicker , ionicTimePicker, $rootScope, $sce, Images, Videos,Locations, $localstorage , Vehicle, $ionicSlideBoxDelegate, $ionicLoading) {
 	
 	console.log("in dashctrl"); 
 	//var imageArr =  [] ; 
@@ -135,48 +135,23 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	 }
 	 
 	 $scope.showNext = function() {
-		 console.log("showing next " + $scope.video_counter ) ;
-	     if ( $scope.video_counter  < $scope.videos.length )
-		 $scope.video_counter ++ ; 
+		 console.log("showing next " + $scope.img_counter ) ;
+	     if ( $scope.img_counter  < $scope.photos.length )
+		 $scope.img_counter ++ ; 
 		else 
 			console.log( "reached end ") ; 
-		
-		$scope.playVideo() ; 
 		 
 	 }
 	 
 	 $scope.showPrev = function() {
-		 console.log("showing prev " + $scope.video_counter ) ; 
-		 if ( $scope.video_counter > 1 )
-		 $scope.video_counter -- ; 
+		 console.log("showing prev " + $scope.img_counter ) ; 
+		 if ( $scope.img_counter > 1 )
+		 $scope.img_counter -- ; 
 	 else 	
 		 console.log("at the beginning");  
-		$scope.playVideo() ;  
+		 
 	 }
 	 
-	
-	$scope.playVideo = function() { 
-	
-	$scope.file_name = $scope.trustSrc($scope.videos[$scope.video_counter].src)   ; 
-	$scope.videoMessage = "Showing Video : " + parseInt($scope.video_counter+1)   ; 
-	//$scope.videoMessage = "Showing Video : " + $scope.video_counter + $scope.videos[$scope.video_counter].src  ; 
-	var player =document.getElementById('myVideo');
-   
-   console.log( "got player "); 
-   
-    var mp4vid = document.getElementById('mp4Source');
-	console.log( "got source ");  
-	
-  //$scope.videoMessage = "showing " + $scope.videos.length + " videos "    ; 
-	
-	 player.src = $scope.videos[$scope.video_counter].src ; 
-	  console.log ("src is " +  player.src ) ; 
-     // player.load();
-	  player.play();
-	
-	
-	
-	}
 	
 
  
@@ -195,31 +170,6 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	 
 	 
 	$scope.getData = function() { 
-	
-	
-				
-		 if ( ConnectivityMonitor.isOnline() ) 
-		 {
-			 // alert("You are online ") ; 
-			 
-		 }
-		 else {
-				alert( "you are not online . Please check your internet connection ") ; return ; 
-				
-		}
-	/*
-	socket.off('video' , function() { 
-	console.log( " socket is off  for video ") ;  
-	} ) ; 
-	
-	
-	socket.off('gps' , function() { 
-	console.log( " socket is off  for image ") ;  
-	} ) ; 
-	*/
-	
-	socket.removeAllListeners() ; 
-	 
 	console.log("going for data" + $scope.total_images ) ; 
 	
 	var imgArr = [] ; 
@@ -271,7 +221,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	
 	var to_hours = ( "0" +$scope.toTime.getHours()).slice(-2) ;  
 	var to_mins  = ( "0" + $scope.toTime.getMinutes()).slice(-2) ; 
-	$scope.file_name = "" ; 
+	
 	
 	
 	console.log(  " month is " + month ) ; 
@@ -285,7 +235,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	//var to_dt = "".concat( year, month,$scope.forDate.getDate() , $scope.toTime.getHours() , $scope.toTime.getMinutes(), "00")  ; 
 	var to_dt = "".concat( year, month,day , to_hours , to_mins, "00")  ; 
 	console.log(" from dt is " + from_dt  + " to date is "  + to_dt ) ; 
-	$scope.video_counter = 0 ; 
+	$scope.counter = 1 ; 
 	var videoArr = [] ; 
 	
 	//$scope.photos = [] ; 
@@ -299,7 +249,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	var video ;  
 	console.log( "got videos "+ JSON.stringify(data) ) ;
 	if ( data == "No data") {  console.log("no videos found "); 
-	$scope.videoMessage = "No videos found for this duration" ; $scope.initPlayer(); return ; }
+	$scope.videoMessage = "No videos found for this duration" ; return ; }
 	console.log( "got videos "+ JSON.stringify(data) ) ;
 	
 	
@@ -308,7 +258,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
                       "desc" :'' } ; 
 					  console.log( "evnt file name is "  + data[i].event_file_name ); 
 	videoArr.push(new_video);
-	//console.log("new video is "+ new_video.src ) ; 
+	console.log("new video is "+ new_video.src ) ; 
 	 }
 	 
 	
@@ -317,12 +267,11 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	
 	console.log( "video json is " + JSON.stringify( videoArr ) ); 
 	
-	$scope.file_name = $scope.trustSrc($scope.videos[$scope.video_counter].src)   ; 
 	
 	
 	
-
- 
+	
+	
 	var player =document.getElementById('myVideo');
    
    console.log( "got player "); 
@@ -336,8 +285,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	  console.log ("src is " +  player.src ) ; 
      // player.load();
 	  player.play();
-	 
-	 /*
+	  
 	  player.addEventListener('ended', function() {
 	   if ( $scope.counter < $scope.videos.length ) {
 		   //var cnt = $scope.count ; 
@@ -355,20 +303,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	   } 
 	   else { console.log( "not more videos" ) ; }
         }, false);
-		
-	*/
 });
- }
-
- $scope.initPlayer = function(){
-	var player =document.getElementById('myVideo');
-	 
-	
-  
-	
-	 player.src = ''; 
-	 
-	 
  }
 	
 
@@ -490,7 +425,6 @@ $scope.getLocations  = function() {
 	 $scope.drawMap = function() { 
 	 
         //latlongArr = $localstorage.getObject("latlongArr") ; 
-		$scope.errorMessage =""; 
 		$scope.GPSMessage = "showing GPS for " + $scope.latlongArr.length +"co-ordinates"  ; 
 		var div = document.getElementById('dvMapSpecific');console.log("got div "  + div ) ; 
 	 div.style.visibility = 'visible'; 
@@ -837,21 +771,8 @@ $scope.setImgMode = function(img_video_option) {
 
 
 
-.controller('LiveCtrl', function( $scope, $rootScope, socket, Images, Locations, Vehicle, $localstorage , $ionicSlideBoxDelegate, $ionicLoading, ConnectivityMonitor) {
+.controller('LiveCtrl', function( $scope, $rootScope, socket, Images, Locations, Vehicle, $localstorage , $ionicSlideBoxDelegate, $ionicLoading) {
 	
-	
-				
-		 if ( ConnectivityMonitor.isOnline() ) 
-		 {
-			 // alert("You are online ") ; 
-			 
-		 }
-		 else {
-				alert( "you are not online . Please check your internet connection ") ; return ; 
-				
-		}
-			
-			
 	console.log("in Livectrl"); 
 	var imageArr =  [] ; 
     $scope.gpsCount = 1 ; 
@@ -1069,11 +990,7 @@ var new_image ;
 	var player =document.getElementById('myVideo');
    
 	 console.log( "got player "); 
-   if ( player.currentTime > 0 && !player.paused && !player.ended && player.readyState > 2 ) {
-	   
-	   console.log( "player already showing video  , ignoring ") ; 
-	   return ; 
-   }
+   
     var mp4vid = document.getElementById('mp4Source');
 	console.log( "got source ");  
 	
@@ -1409,7 +1326,7 @@ return ;
 	
 	
      
-    .controller('LoginCtrl', function ($scope, $state, $location, Login , Vehicle, $rootScope, $localstorage,$ionicLoading,ConnectivityMonitor) {
+    .controller('LoginCtrl', function ($scope, $state, $location, Login , Vehicle, $rootScope, $localstorage,$ionicLoading) {
         console.log( "in controller ") ; 
 
 		$scope.show = function() {
@@ -1442,19 +1359,6 @@ return ;
       
  
         $scope.doLogin = function (loginData) {
-			
-			
-		 if ( ConnectivityMonitor.isOnline() ) 
-		 {
-			 //alert("You are online ") ; 
-			 
-		 }
-		 else {
-				alert( "you are not online . Please check your internet connection ") ; return ; 
-				
-		}
-		
-		
            
            console.log( "in login of controller "+loginData);
            console.log( "is login is " + $rootScope.userModel.isLogIn ) ; 

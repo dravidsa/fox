@@ -1,4 +1,4 @@
-angular.module('app', ['ionic', 'app.controllers', 'app.services','app.routes','app.directives','btford.socket-io','ionic-timepicker','ionic-datepicker' ,'ngCordova'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services','app.routes','app.directives','btford.socket-io','ionic-timepicker','ionic-datepicker'])
 
     .run(function ($rootScope, $state, $ionicPlatform, $window, $localstorage, Login) {
         var userModel = {

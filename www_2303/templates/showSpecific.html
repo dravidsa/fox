@@ -19,7 +19,7 @@
 
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
-    <h2>Specific Mode </h2>
+    <h2>GPS and Camera (Specific Mode) </h2>
 
 	<div id="main" ng-controller="DashCtrl" ng-init="getVehicles()">
 
@@ -124,7 +124,9 @@ option is 	{{img_video_option}}
 </div> 
 
 
-
+<button id="prevButton" class="button button-small" ng-Click="showPrev()" ng-if="mode == 'specific'">
+   <<
+</button>
 
 
   <img id="imageHolder" src="{{photos[img_counter].src}}"  class="row"   style="width:90%;height:300px;"  >
@@ -135,23 +137,11 @@ option is 	{{img_video_option}}
 			
 </div>
 
-
-
-
 <div id="videoDiv" ng-if="img_video_option == 'Video'"> 
 <video width="100%" height="300px"  id="myVideo" controls autoplay >
-    <source src= {{file_name}} id="mp4Source" type="video/mp4">
+    <source src=""   id="mp4Source" type="video/mp4">
   
-
 </video>
-
-<button id="prevButton"  class="button button-energized" ng-Click="showPrev()"  ng-if="mode == 'specific'" style="position: absolute; left: 0;" >
-  Prev 
-</button>
-
-<button id="nextButton"  class="button button-energized" ng-Click="showNext()"  ng-if="mode == 'specific'" style="position: absolute; right: 0;"  >
-  Next 
-</button>
 </div> 
 
     
