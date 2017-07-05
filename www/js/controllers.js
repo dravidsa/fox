@@ -145,6 +145,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 		 
 	 }
 	 
+	 
 	 $scope.showPrev = function() {
 		 console.log("showing prev " + $scope.video_counter ) ; 
 		 if ( $scope.video_counter > 1 )

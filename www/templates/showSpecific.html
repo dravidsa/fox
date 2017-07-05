@@ -19,7 +19,7 @@
 
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
-    <h2>Specific Mode </h2>
+    <h2>Specific Time Mode </h2>
 
 	<div id="main" ng-controller="DashCtrl" ng-init="getVehicles()">
 
@@ -139,7 +139,7 @@ option is 	{{img_video_option}}
 
 
 <div id="videoDiv" ng-if="img_video_option == 'Video'"> 
-<video width="100%" height="300px"  id="myVideo" controls autoplay >
+<video width="400"   id="myVideo" controls autoplay >
     <source src= {{file_name}} id="mp4Source" type="video/mp4">
   
 
