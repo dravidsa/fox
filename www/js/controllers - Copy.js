@@ -29,7 +29,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 
 
 	
-	.controller('DashCtrl', function($scope,ionicDatePicker , ionicTimePicker, $rootScope,socket,  $sce, Images, Videos,Locations, $localstorage , Vehicle, $ionicSlideBoxDelegate, $ionicLoading ) {
+	.controller('DashCtrl', function($scope,ionicDatePicker , ionicTimePicker, $rootScope,socket,  $sce, Images, Videos,Locations, $localstorage , Vehicle, $ionicSlideBoxDelegate, $ionicLoading , ConnectivityMonitor) {
 	
 	console.log("in dashctrl"); 
 	//var imageArr =  [] ; 
@@ -197,7 +197,7 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 	 
 	$scope.getData = function() { 
 	
-	/*
+	
 				
 		 if ( ConnectivityMonitor.isOnline() ) 
 		 {
@@ -208,8 +208,6 @@ foxapp = angular.module('app.controllers', ["ion-datetime-picker"])
 				alert( "you are not online . Please check your internet connection ") ; return ; 
 				
 		}
-		*/
-		
 	/*
 	socket.off('video' , function() { 
 	console.log( " socket is off  for video ") ;  
@@ -840,10 +838,10 @@ $scope.setImgMode = function(img_video_option) {
 
 
 
-.controller('LiveCtrl', function( $scope, $rootScope, socket, Images, Locations, Vehicle, $localstorage , $ionicSlideBoxDelegate, $ionicLoading) {
+.controller('LiveCtrl', function( $scope, $rootScope, socket, Images, Locations, Vehicle, $localstorage , $ionicSlideBoxDelegate, $ionicLoading, ConnectivityMonitor) {
 	
 	
-	/*			
+				
 		 if ( ConnectivityMonitor.isOnline() ) 
 		 {
 			 // alert("You are online ") ; 
@@ -853,8 +851,7 @@ $scope.setImgMode = function(img_video_option) {
 				alert( "you are not online . Please check your internet connection ") ; return ; 
 				
 		}
-		*/
-		
+			
 			
 	console.log("in Livectrl"); 
 	var imageArr =  [] ; 
