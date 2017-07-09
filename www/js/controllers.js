@@ -1413,7 +1413,7 @@ return ;
 	
 	
      
-    .controller('LoginCtrl', function ($scope, $state, $location, Login , Vehicle, $rootScope, $localstorage,$ionicLoading,ConnectivityMonitor) {
+    .controller('LoginCtrl', function ($scope, $state, $location, Login , Vehicle, $rootScope, $localstorage,$ionicLoading) {
         console.log( "in controller ") ; 
 
 		$scope.show = function() {
@@ -1447,7 +1447,7 @@ return ;
  
         $scope.doLogin = function (loginData) {
 			
-			
+		/*	
 		 if ( ConnectivityMonitor.isOnline() ) 
 		 {
 			 //alert("You are online ") ; 
@@ -1457,6 +1457,7 @@ return ;
 				alert( "you are not online . Please check your internet connection ") ; return ; 
 				
 		}
+		*/
 		
 		
            
