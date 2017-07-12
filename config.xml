@@ -25,6 +25,9 @@
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
+	<icon src="resources\ios\icon\drawable-ldpi-icon.png" density="ldpi"/>
+    <icon src="resources\ios\icon\drawable-mdpi-icon.png" density="mdpi"/>
+    <icon src="resources\ios\icon\drawable-hdpi-icon.png" density="hdpi"/>
   </platform>
-  <icon src="resources\android\icon\drawable-hdpi-icon.png"/>
+   
 </widget>
